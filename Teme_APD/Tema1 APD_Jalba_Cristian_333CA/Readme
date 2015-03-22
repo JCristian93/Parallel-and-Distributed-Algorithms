@@ -1,0 +1,42 @@
+Tema 1 APD - Readme
+@author : Jalba Cristian grupa 333 CA
+
+	Pentru inceput trebuie sa mentionez ca exista 2 abordari la aceasta tema .
+Prima este sa citesti matricea si sa o bordezi cu 0 daca aceasta este plan 
+sau cum elemente de pe liniile 0 , h respectiv coloanele 0 , w daca este
+toroid. A doua metoda este doar sa fac niste verificari pentru elementele 
+marginale fara a face bordarea efectiva . Eu am mers pe prima varianta.
+	Mai intai calculez maximul intre w_harta , w respectiv h_harta , h
+pentru a putea aloca un spatiu suficient de mare incat sa imi incapa 
+matricea citita din fisier. Dupa ce citesc matricea , stiu care trebuie sa fie
+dimensiunea matricei de iesire si bordez o matrice de dimensiuni w, h. Nu are 
+importanta daca aceasta bordare incadreaza doar o parte din matricea citita 
+deoarece ne intereseaza doar w , h . Astfel se face o cropare a tot ce depaseste
+w sau h . 
+	Spatiu meu fiind alocat cu calloc , matricea initial e plina de 0 , deci
+in portiunile in care nu citesc ramane 0 . Astfel , daca w_harta sau h_harta sunt
+mai mici ca w respectiv h , matricea se "umple" automat cu 0 . De exemplu , 
+urmatorul input:
+	 P 5 3 4 4 
+	 1 0 1 0 1
+	 0 1 0 1 1
+	 1 1 1 1 1	se transforma dupa citire in 1 0 1 0
+	 										 0 1 0 1
+	 										 1 1 1 1
+	 										 0 0 0 0
+deoarece eu lucrez numai cu portiunea asta din ce am citit din fisier. 
+	Dupa bordare , pornesc cu verificarea de la pozitia (1,1) si ma uit la cei 8 vecini
+ai fiecarui element . Aplic regurile din cerinta si scriu rezultatul in cealalta matrice
+(daca la inceput citesc in matrix_out , rezultatul il scriu in matrix_aux) .
+Astfel s-a creat o noua generatie , iar daca mai vreau inca una pur si simplu bordez
+matrix_aux in loc de matrix_out si de data asta scriu in matrix_out rezultatele . 
+Cele 2 matrici continua sa faca swap intre ele pana cand am ajuns la numarul dorit de generatii.
+Variabile cu care fac swap se numeste : int switcher = 1 , care o inmultesc cu (-1) cand
+vreau sa comut intre matrici.
+	Dupa ce au trecut cele N generatii , e momentul sa elimin toate 0-urile inutile 
+adica trebuie sa caut pozitia ultimului element 1 din matrice si sa afisez matricea 
+pana la acel element . 
+	In principiu cam asta e tot ce face codul , am lasat comentarii care sper sa ajute 
+o intelegere mai buna , iar daca sunt erori sau buguri ce le-am trecut cu vederea 
+imi puteti da un mail la jalba.cristian0493@gmail.com si o sa fac corectarile necesare . 
+ 										 	

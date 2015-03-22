@@ -1,0 +1,21 @@
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class lab4ex1 extends Thread implements Runnable {
+	
+	public static void main(String[] args) {
+		int cores = Runtime.getRuntime().availableProcessors();
+		lab4ex1 obj = new lab4ex1();
+		int [] vectoras = new int[100000];
+		List<Thread> threads = new ArrayList<Thread>();	//lista de threads
+		for (int i = 0 ; i < N ; i++) {
+			Thread t = new Thread(lab_obj);
+			t.start();
+			threads.add(t);
+		}
+		for (int i = 0 ; i < vectoras.length ; i++) {
+			if 
+		}
+	}
+}

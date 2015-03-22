@@ -1,0 +1,33 @@
+Readme Tema 3 APD : Calcul Paralel folosind MPI
+@auhtor : Jalba Cristian 333 CA
+readme scris in gedit
+
+	Implementarea temei a pornit de la functiile mandelbrot si julia din enunt.
+Link-ul de pe wikipedia pentru mandelbrot m-a ajutat putin cu pseudocod-ul de la
+finalul paginii . Functia pentru generarea mandelbrot-ului are c-ul variabil si 
+z-ul mereu initializat la 0 .Pentru julia c-ul e constant si initializat 
+la julia_c_x , julia_c_y luate din fisier , iar z-ul e variabil . Pasul cu care 
+variez c si z este rezolutia . 
+	In principiu programul se comporta destul de simplu : Se genereaza atatea
+procese care se dau ca parametru la -np . Citirea din fisier se face numai in master
+(procesul ce are rank = 0) . In functie de primul numar din fisier (0 sau 1) masterul
+isi prelucreaza bucata de matrice ca mandelbrot sau julia . Pentru a comunica cu 
+celelalte procese , folosesc MPI_Send ; MPI_Recv si trimit un vector de int si un 
+vector de double ce contin datele necesare pentru a calcula o portiune din fractal. 
+Aceste date sunt parametrii pentru mandelbrot sau julia .
+	Dupa ce am trimis acesti vectori la celelalte procese , astept ca reply 
+un "antet" , adica un vector ce sa imi spuna linia de inceput si de sfarsit si 
+implicit numarul ce linii ce o sa primesc de la un anumit proces . Dupa acest antet
+voi primi prin mai multe Recv-uri fiecare linie ce compune portiunea respectiva 
+facuta de proces . 
+	Celelalte procese (adica cu rank diferit de 0) dupa ce primesc informatiile 
+de la master , isi genereaza portiunea lor de poza , creeaza antetul , trimit antetul
+catre master , apoi trimit aceasta portiune de poza linie cu linie catre master . 
+Motivul pentru care trimit linie cu linie este ca bufferul Send-ului suporta maxim 
+45000 de MPI_INT si o portiune de poza poate avea si milioane de int-uri . Daca 
+latimea pozei este mai mare de 45000 atunci nasol ... o sa crape programul . 
+	Am uitat sa precisez ca citirea din fisier se face doar in master , la fel si
+scrierea in fisier dupa ce poza a fost compusa in forma ei finala .
+	Am adaugat comentarii in cod ce sper sa fie de ajutor , sper ca am fost explicit
+in readme . Codul este destul de scurt si simplu organizat iar cerinta temeri a fost 
+foarte clara cu ce trebuie facut .  

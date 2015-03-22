@@ -1,0 +1,17 @@
+
+
+
+public class lab4 implements Runnable extends Thread{
+	
+	public static void main(String[] args) {
+		int cores = Runtime.getRuntime().availableProcessors();
+		System.out.println("number of cores "+ cores);
+		
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+}

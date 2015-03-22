@@ -1,0 +1,41 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class lab4ex1 extends Thread implements Runnable {
+	
+	int [] vectoras;
+	static int i;
+	List<Thread> threads
+	public lab4ex1 () {
+		vectoras = new int[100000];
+	}
+	public static void main(String[] args) {
+		int cores = Runtime.getRuntime().availableProcessors();
+		lab4ex1 obj = new lab4ex1();
+		threads = new ArrayList<Thread>();	//lista de threads
+		for (int i = 0 ; i < cores ; i++) {
+			Thread t = new Thread(obj);
+			t.start();
+			threads.add(t);
+		}
+		//obj.afisare_vectoras();
+	}
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		Thread t = Thread.currentThread();
+		for (i = 0 ; i < obj.vectoras.length ; i++) {
+			if (i % 4 == t.getId()) threads.get(t.getId()); 	
+		}
+		vectoras[i] = i * i;
+	}
+	public void afisare_vectoras() {
+		for (int j = 0 ; j < vectoras.length ; j++) {
+			System.out.println(vectoras[i] + " ");
+		}
+	}
+}

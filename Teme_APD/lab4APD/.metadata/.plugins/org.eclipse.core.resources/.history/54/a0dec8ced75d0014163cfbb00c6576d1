@@ -1,0 +1,8 @@
+
+public class lab4ex1 extends Thread implements Runnable {
+	
+	public static void main(String[] args) {
+		int cores = Runtime.getRuntime().availableProcessors();
+		labex1 obj = new lab4ex1();
+	}
+}

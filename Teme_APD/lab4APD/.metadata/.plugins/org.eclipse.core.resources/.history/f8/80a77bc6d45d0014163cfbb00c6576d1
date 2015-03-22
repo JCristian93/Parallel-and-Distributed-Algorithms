@@ -1,0 +1,38 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+
+
+public class lab4 extends Thread implements Runnable{
+	
+	public static void main(String[] args) {
+		int cores = Runtime.getRuntime().availableProcessors();
+		System.out.println("number of cores "+ cores);
+		lab4 lab_obj = new lab4();
+		for (int i = 0 ; i < N ; i++) {
+			Thread t = new Thread(lab_obj);
+			t.start();
+		}
+		
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		Thread t = Thread.currentThread();
+		BufferedWriter out = null;
+        try  
+        {
+            FileWriter fstream = new FileWriter("out.txt", true); //true tells to append data.
+            out = new BufferedWriter(fstream);
+            out.write("\n blablabla" + t.getId());
+        }
+        catch (IOException e)
+        {
+            System.err.println("Error: " + e.getMessage());
+        }
+        
+	}
+}

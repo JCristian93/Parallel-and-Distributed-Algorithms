@@ -1,0 +1,47 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class lab4 extends Thread implements Runnable{
+	
+	public static void main(String[] args) throws InterruptedException {
+		int cores = Runtime.getRuntime().availableProcessors();
+		System.out.println("number of cores "+ cores);
+		lab4 lab_obj = new lab4();
+		int N = cores;
+		List<Thread> threads = new ArrayList<Thread>();	//lista de threads
+		for (int i = 0 ; i < N ; i++) {
+			Thread t = new Thread(lab_obj);
+			t.start();
+			threads.add(t);
+		}
+		for (int i = 0; i < threads.size(); i++)
+	    {
+	        // Big number to wait so this can be debugged
+	        // System.out.println("JOINING: " + threads.get(i));
+	        ((Thread)threads.get(i)).join();
+	    }
+		
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		Thread t = Thread.currentThread();
+		BufferedWriter out = null;
+        try  
+        {
+            FileWriter fstream = new FileWriter("out" + t.getId() +".txt", true); //true tells to append data.
+            out = new BufferedWriter(fstream);
+            out.write("\n blablabla" + t.getId());
+        }
+        catch (IOException e)
+        {
+            System.err.println("Error: " + e.getMessage());
+        }
+        
+	}
+}

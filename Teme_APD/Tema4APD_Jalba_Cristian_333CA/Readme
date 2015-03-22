@@ -1,0 +1,44 @@
+Readme Tema 4 APD
+@author : Jalba Cristian 333CA
+
+	Implementarea mea cuprinde prima etapa integrala si a doua etapa partial.
+Am incercat sa folosesc receive-uri non-blocante la a doua parte dar din pacate
+nu am reusit sa determin cand un Irecv se face cu success sau nu . Am incercat 
+sa folosesc MPI_Test pentru a verifica daca am primit sau nu un mesaj dar am
+aflat ca MPI_Test nu e recomandat cand ai doar instructiuni blocante deoarece
+poate sa apara deadlock . Asa ca m-am bazat ca Irecv va suprascrie un new_message
+ce l-am initializat cu -2 la sursa si destinatie . Din pacate nici un Irecv nu a 
+fost terminat cu success deci nu s-a suprascris mesajul vreodata . 
+	O alta problema la Irecv e absenta lui status. Status ma ajuta sa determin 
+nodul parinte de la care am primit mesajul . Acest neajuns l-am rezolvat adaugand
+inca un camp la structura de mesaje in care am specificat nodul ce trimite mesajul,
+adica parintele celui ce il primeste. 
+	Etapa 2 incepe cu citirea si stocarea tuturor mesajelor intr-un vector de 
+tip Mesaj_prim de catre fiecare nod apoi trimiterea in retea a mesajelor . Urmeaza 
+o etapa de listening in care verific daca am un mesaj pe canal , daca am atunci 
+verific daca e broadcast sau mesaj destinat alt nod , caz in care il redirectez si fac afisari.
+Daca e mesaj destinat nodului curent atunci nu fac decat afisarea in fisier .
+	Daca nu avem un mesaj pe canal atunci pun un sleep(timeout) , 
+unde timeout = nr_procese * nr_mesaje * 0.2 . Dupa acest sleep verific din nou 
+daca e ceva pe canalul de comunicatie . Daca e atunci procesez ce am primit si 
+continui while-ul . Daca nu e atunci ies din while si dau un mesaj de broadcast
+semnaland ca s-a terminat etapa 2 . 
+	O varianta mai simpla de rezolvare ar fi fost sa folosesc Send si Recv , iar 
+un nod sa termine de trimis mesaje cand primeste mesaj de broadcast de la toate 
+celelalte noduri . Cand primeam un mesaj non-broadcast de la un nod puteam sa ma 
+astept sa mai primesc de la acel nod alte mesaje .
+	Prima parte e implementata corect , am modificat mai mult sau mai putin algoritmul
+din laboratorul 10 pentru a fi mai usor de adaptat la tema . Arborele de acoperire 
+este construit si trimis catre initiator (procesul 0) de unde se face broadcast cu 
+acesta iar fiecare nod construieste tabela de rutare . Toate procesele isi afiseaza
+tabela de rutare in fisier iar initiatorul afiseaza si arborele de acoperire . 
+	Tabela de rutare am determinat-o folosind DFS deoarece toate legaturile noastre
+au costul 1 si ar fi overkill Dijkstra sau Roy-Floyd. 
+	Programul necesita in argv[1] numele fisierului cu nodurile din arbore si legaturile.
+De asemenea fisierul mesaje_input_etapa_2 trebuie sa fie prezent si sa contina mesajele
+pentru etapa 2 . Se vor crea fisierele output_etapa_1 si output_etapa_2 in modul append .
+Din pacate output_etapa_2 va fi gol , deoarece Irecv nu primeste nimic sau neglijeaza
+ce vine de pe canal . 
+	A fost o tema interesanta si muncitoare dar am inceput-o prea tarziu si am abordat 
+gresit etapa 2 . Trebuia sa folosesc Send si Recv dar acum e prea tarziu , ar insemna
+sa fac redesign la juma de tema . 
